@@ -11,16 +11,23 @@
 #define NUM_LEDS 24               // How many leds are in the strip?
 #define DATA_PIN D1               // Data pin that led data will be written out over
 #define LED_TYPE WS2812B          //LED chip type
-#define BRIGHTNESS   8           // Set LED brightness - 0 - 255
+#define BRIGHTNESS   8            // Set LED brightness - 0 - 255
 #define COLOR_ORDER  GRB          // Define LED colour order
-#define KEY "XXXXXXXXXX"        // timezonedb.com API Key
+#define KEY "XXXXXXXXXX"          // timezonedb.com API Key
+int ntpUpdate = 600;
 
 byte hour_hand, minute_hand, second_hand, previous_second;
 char urlData[180]; //array for holding complied URL
 int  offset; // UTC offset in seconds
 
 WiFiUDP ntpUDP;                   //initialise UDP NTP
-NTPClient ntpClient(ntpUDP, "time.google.com"); // initialist NTP client with server name 
+
+// You can specify the time server pool and the offset (in seconds, can be
+// changed later with setTimeOffset() ). Additionaly you can specify the
+// update interval (in milliseconds, can be changed using setUpdateInterval() ).
+// NTPClient ntpClient(ntpUDP, "time.google.com", 3600, 0);
+
+NTPClient ntpClient(ntpUDP, "time.google.com", ntpUpdate, 0); // initialist NTP client with server name 
 hourFormat12();               // Set to 12 hour AM.PM time 
 
 HTTPClient http;// Initialise HTTP Client
